@@ -21,7 +21,7 @@ int main()
         c = a;
         c.print();
     }
-    catch (const std::bad_alloc badAllocExeption)
+    catch (const std::bad_alloc& badAllocExeption)
     {
         std::cout << "Not enough memory!" << std::endl;
     }
