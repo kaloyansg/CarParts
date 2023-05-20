@@ -4,39 +4,45 @@ unsigned CarPart::idRef = 0;
 
 CarPart::CarPart()
 {
-	char* temp = nullptr;
-	char* temp2 = nullptr;
+	char* tempMan = nullptr;
+	char* tempDesc = nullptr;
 	try
 	{
-		temp = new char[strlen("DefaultManufacturer") + 1];
-		temp2 = new char[strlen("DefaultDescription") + 1];
+		tempMan = new char[strlen("DefaultManufacturer") + 1];
+		tempDesc = new char[strlen("DefaultDescription") + 1];
 	}
-	catch (const std::bad_alloc error)
+	catch (const std::bad_alloc& error)
 	{ 
-		if(temp)
-		delete[] temp;
+		if(tempMan)
+		delete[] tempMan;
 
 		throw error;
 	}
 
 	idRef++;
 	id = idRef;
-	strcpy(temp, "DefaultManufacturer");
-	manufacturer = temp;
-	strcpy(temp2, "DefaultDescription");
-	description = temp2;
+	strcpy(tempMan, "DefaultManufacturer");
+	manufacturer = tempMan;
+	strcpy(tempDesc, "DefaultDescription");
+	description = tempDesc;
 }
 
 CarPart::CarPart(const char* manufacturer, const char* description)
 {
-	char* tempMan = new char[strlen(manufacturer) + 1];
-	char* tempDesc = new (std::nothrow) char[strlen(description) + 1];
-
-	if (!tempDesc)
+	char* tempMan = nullptr;
+	char* tempDesc = nullptr;
+	try
 	{
-		delete[] tempMan;
-		std::bad_alloc exeption;
-		throw exeption;
+		tempMan = new char[strlen(manufacturer) + 1];
+		tempDesc = new char[strlen(description) + 1];
+
+	}
+	catch (const std::bad_alloc& error)
+	{
+		if (tempMan)
+			delete[] tempMan;
+
+		throw error;
 	}
 
 	idRef++;
@@ -50,13 +56,19 @@ CarPart::CarPart(const char* manufacturer, const char* description)
 
 CarPart::CarPart(const CarPart& other)
 {
-	char* tempMan = new char[strlen(other.manufacturer) + 1];
-	char* tempDesc = new (std::nothrow) char[strlen(other.description) + 1];
-	if (!tempDesc)
+	char* tempMan = nullptr;
+	char* tempDesc = nullptr;
+	try
 	{
+		tempMan = new char[strlen(other.manufacturer) + 1];
+		tempDesc = new char[strlen(other.description) + 1];
+	}
+	catch (const std::bad_alloc& error)
+	{
+		if(tempMan)
 		delete[]tempMan;
-		std::bad_alloc exeption;
-		throw exeption;
+
+		throw error;
 	}
 	idRef++;
 	id = idRef;
@@ -70,13 +82,17 @@ CarPart& CarPart::operator=(const CarPart& other)
 {
 	if (this == &other) return *this;
 
-	char* tempMan = new char[strlen(other.manufacturer) + 1];
-	char* tempDesc = new (std::nothrow) char[strlen(other.description) + 1];
-	if (!tempDesc)
+	char* tempMan = nullptr;
+	char* tempDesc = nullptr;
+	try
 	{
-		delete[] tempMan;
-		std::bad_alloc exeption;
-		throw exeption;
+		tempMan= new char[strlen(other.manufacturer) + 1];
+		tempDesc = new char[strlen(other.description) + 1];
+	}
+	catch (const std::bad_alloc& error)
+	{
+		if (tempMan) delete[] tempMan;
+		throw error;
 	}
 
 	idRef++;
